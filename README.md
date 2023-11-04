@@ -1,5 +1,5 @@
 
-# GameTalks
+# GameTalks 🎮
 
 ## Passo a passo da instalação
 
@@ -29,9 +29,9 @@
      source venv/bin/activate
      ```
 
-4. Utilize o `pip` para instalar as dependências do projeto:
+4. Utilize o `pip` para instalar as dependências do projeto a partir do arquivo requirements.txt:
    ```
-   pip install
+   pip install -r requirements.txt
    ```
 
 5. Tente executar o projeto Django com o seguinte comando:
