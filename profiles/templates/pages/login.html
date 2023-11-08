@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static '/profiles/css/styles.css' %}">
+</head>
+<body>
+    <div class="background-img d-flex-center" >
+        <div class="login-container d-flex-center" >
+            <div class="options">
+                <form action="">
+                    <div class="signin-option">
+                        <input type="radio" id="signin-option" name="login_type" value="signin-option" checked>
+                        <label for="signin-option">Entrar</label>
+                    </div>
+                    <div class="register-option">
+                        <input type="radio" id="register-option" name="login_type" value="register-option">
+                        <label for="register-option">Registrar</label>
+                    </div>
+                </form>
+            </div>
+            <div class="signin">
+                <form action="">
+                    <input type="text" id="login-user-email" name="login" value="login-user-email">
+                    <input type="text" id="login-password" name="login" value="login-password">
+                </form>
+            </div>
+            <div class="register">
+                <form action="">
+                    <input type="text" id="register-user" name="register" value="register-user">
+                    <input type="text" id="register-email" name="register" value="register-email">
+                    <input type="text" id="register-password" name="register" value="register-password">
+                    <input type="text" id="register-repeat-password" name="register" value="register-repeat-password">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
