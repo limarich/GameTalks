@@ -1,0 +1,60 @@
+body {
+    margin: 0;
+}
+
+.background-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-image: url('/static/profiles/images/background.jpg');
+    width: 100vw;
+    height: 100vh;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding-top: 3rem;
+    background-color: #CBB6E6;
+    width: 25vw;
+    height: 55vh;
+    border-radius: 20px;
+}
+.options {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.options form {
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+    font-size: 18px;
+}
+.options form input[type="radio"], label {
+    cursor: pointer;
+}
+.options form  input[type="radio"] {
+    all: unset;
+    display: block;
+    height: .3rem;
+    width: 100%;
+    background-color: transparent;
+    border-radius: 8px;
+}
+.options form  input[type="radio"]:checked {
+    background-color: #7552E0;
+}
+.options input:checked + label{
+    color: #7552E0;
+}
+.signin-option, .register-option {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+
+
