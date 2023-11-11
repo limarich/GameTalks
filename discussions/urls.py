@@ -5,5 +5,7 @@ app_name = "discussions"
 
 urlpatterns = [
     path('teste', views.teste, name="teste"),
-    path('posts', views.posts, name="posts")
+    path('posts', views.posts, name="posts"),
+    path('', views.homepage, name="homepage"),
+    
 ]

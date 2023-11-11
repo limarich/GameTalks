@@ -22,7 +22,7 @@
                 <input type="hidden"
                        name="{{ redirect_field_name }}"
                        value="{{ redirect_field_value }}" />
-            {% endif %}
+                       {% endif %}
         {% endslot %}
         {% slot actions %}
             {% element button type="submit" tags="prominent,login" %}
@@ -30,5 +30,5 @@
             {% endelement %}
         {% endslot %}
     {% endelement %}
-    {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+    <a href="/accounts/google/login?process=login">google</a>
 {% endblock content %}
