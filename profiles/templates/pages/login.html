@@ -1,40 +1,104 @@
-{% load static %}
+{% load i18n %} {% load static %}
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Login</title>
-    <link rel="stylesheet" href="{% static '/profiles/css/styles.css' %}">
-</head>
-<body>
-    <div class="background-img d-flex-center" >
-        <div class="login-container d-flex-center" >
-            <div class="options">
-                <form action="">
-                    <div class="signin-option">
-                        <input type="radio" id="signin-option" name="login_type" value="signin-option" checked>
-                        <label for="signin-option">Entrar</label>
-                    </div>
-                    <div class="register-option">
-                        <input type="radio" id="register-option" name="login_type" value="register-option">
-                        <label for="register-option">Registrar</label>
-                    </div>
-                </form>
+    <link rel="stylesheet" href="{% static '/profiles/css/styles.css' %}" />
+  </head>
+  <body>
+    <div class="background-img d-flex-center">
+      <div class="login-container d-flex-center">
+        <div class="options">
+          <form action="">
+            <div class="signin-option">
+              <input
+                type="radio"
+                id="signin-option"
+                name="login_type"
+                value="signin-option"
+                checked
+              />
+              <label for="signin-option">Entrar</label>
             </div>
-            <div class="signin">
-                <form action="">
-                    <input type="text" id="login-user-email" name="login" value="login-user-email">
-                    <input type="text" id="login-password" name="login" value="login-password">
-                </form>
+            <div class="register-option">
+              <input
+                type="radio"
+                id="register-option"
+                name="login_type"
+                value="register-option"
+              />
+              <label for="register-option">Registrar</label>
             </div>
-            <div class="register">
-                <form action="">
-                    <input type="text" id="register-user" name="register" value="register-user">
-                    <input type="text" id="register-email" name="register" value="register-email">
-                    <input type="text" id="register-password" name="register" value="register-password">
-                    <input type="text" id="register-repeat-password" name="register" value="register-repeat-password">
-                </form>
-            </div>
+          </form>
         </div>
+        <form method="post" action="{% url 'account_login' %}" id="login-form">
+          {% csrf_token %} {{ login_form.non_field_errors }}
+          <div class="fieldWrapper">{{ login_form.login }}</div>
+          <div class="fieldWrapper">
+            {{ login_form.password.label_tag }} {{ login_form.password }}
+          </div>
+          <div class="fieldWrapper">
+            <input
+              type="checkbox"
+              id="id_remember"
+              name="remember"
+              {%
+              if
+              login_form.remember.value
+              %}checked{%
+              endif
+              %}
+            />
+            <label for="id_remember">{% trans 'Remember Me' %}</label>
+          </div>
+          <input type="submit" value="{% trans 'Sign In' %}" />
+        </form>
+
+        <form
+          method="post"
+          action="{% url 'account_signup' %}"
+          id="register-form"
+          style="display: none"
+        >
+          {% csrf_token %}
+          <div class="fieldWrapper">
+            {{ signup_form.username.label_tag }} {{ signup_form.username }}
+          </div>
+          <div class="fieldWrapper">
+            {{ signup_form.email.label_tag }} {{ signup_form.email }}
+          </div>
+          <div class="fieldWrapper">
+            {{ signup_form.password1.label_tag }} {{ signup_form.password1 }}
+          </div>
+          <div class="fieldWrapper">
+            {{ signup_form.password2.label_tag }} {{ signup_form.password2 }}
+          </div>
+
+          <input type="submit" value="{% trans 'Sign Up' %}" />
+        </form>
+      </div>
     </div>
-</body>
+  </body>
 </html>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const signinOption = document.getElementById("signin-option");
+    const registerOption = document.getElementById("register-option");
+    const loginForm = document.getElementById("login-form");
+    const registerForm = document.getElementById("register-form");
+
+    signinOption.addEventListener("change", function () {
+      if (signinOption.checked) {
+        loginForm.style.display = "block";
+        registerForm.style.display = "none";
+      }
+    });
+
+    registerOption.addEventListener("change", function () {
+      if (registerOption.checked) {
+        loginForm.style.display = "none";
+        registerForm.style.display = "block";
+      }
+    });
+  });
+</script>

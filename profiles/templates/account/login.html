@@ -1,4 +1,9 @@
 {% extends "account/base_entrance.html" %}
+
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static '/accounts/css/login.css' %}">
+
 {% load i18n %}
 {% load allauth account socialaccount %}
 {% block head_title %}
@@ -8,7 +13,7 @@
     {% element h1 %}
         {% trans "Sign In" %}
     {% endelement %}
-    <p>
+    <p class="teste">
         {% blocktrans %}Ops! Ainda não  possui acesso? 
     <a href="{{ signup_url }}">crie uma conta</a>{% endblocktrans %}
     </p>
