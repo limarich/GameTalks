@@ -2,12 +2,137 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Perfil</title>
+    <title>GameTalks🎮</title>
+    <link rel="stylesheet" href="{% static "/homepage/css/homepage.css" %}">
+    <link rel="stylesheet" href="{% static "/homepage/css/background.css" %}">
   </head>
   <body>
     <div class="d-flex-center">
-      <h1>Página Inicial</h1>
-      <a href="/login">Fazer login</a>
+      <header>
+        <h3>GameTalks🎮</h3>
+        <ul class="sections-list">
+          <li><a href="#init">INÍCIO</a></li>
+          <li><a href="#explore">EXPLORE</a></li>
+          <li><a href="#about">SOBRE</a></li>
+          <li><button class="join-btn">Participe Agora</button></li>
+        </ul>
+      </header>
+      <section id="init">
+        <div class="background">
+          <div class="background-wrapper">
+            <img class="svg svg1" src="{% static "/homepage/images/blob1.svg" %}"/>
+            <img class="svg svg2" src="{% static "/homepage/images/blob2.svg" %}"/>
+            <img class="svg svg3" src="{% static "/homepage/images/blob3.svg" %}"/>
+            <div class="overlayer"></div>
+          </div>
+        </div>
+        <h1>GameTalks🎮</h1>
+        <p class="description">
+          Entre para a nossa comunidade e explore cada vez mais o mundo de jogos
+        </p>
+        <button class="join-btn">Participe Agora</button>
+      </section>
+      <section id="explore">
+        <div class="background" style="--displacement: 1.25;">
+          <div class="background-wrapper" >
+            <img class="svg svg1" src="{% static "/homepage/images/blob1.svg" %}"/>
+            <img class="svg svg2" src="{% static "/homepage/images/blob2.svg" %}"/>
+            <img class="svg svg3" src="{% static "/homepage/images/blob3.svg" %}"/>
+            <div class="overlayer"></div>
+          </div>
+        </div>
+        <ul>
+          <li>
+            <img src="{% static "/homepage/images/game1.svg" %}"
+            alt="descubra"/>
+            <span>Encontre novos parceiros para a jogatina</span>
+          </li>
+          <li>
+            <img src="{% static "/homepage/images/game2.svg" %}" alt="explore"/>
+            <span
+              >Explore comunidades sobre os mais diversos tipos de games</span
+            >
+          </li>
+        </ul>
+        <button class="join-btn">Participe Agora</button>
+      </section>
+      <section id="about">
+        <div class="background" style="--displacement: -1;">
+          <div class="background-wrapper">
+            <img class="svg svg1" src="{% static "/homepage/images/blob1.svg" %}"/>
+            <img class="svg svg2" src="{% static "/homepage/images/blob2.svg" %}"/>
+            <img class="svg svg3" src="{% static "/homepage/images/blob3.svg" %}"/>
+            <div class="overlayer"></div>
+          </div>
+        </div>
+        <img src="{% static "/homepage/images/rectangle.png" %}"
+        alt="background">
+        <div class="content">
+          <h1>Sobre</h1>
+          <div class="container">
+            <h3>Metas e Objetivos</h3>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio et
+              illo quam minima provident reprehenderit iste cumque veritatis,
+              voluptates debitis nostrum ut, sit officiis at illum nihil error
+              odio dicta! Eius expedita voluptatibus pariatur tempore, quo
+              similique harum modi ipsum voluptatem recusandae laboriosam
+              deserunt, maiores nobis, sequi consectetur. Accusamus quis est
+              quod odio dolores quam, cumque nemo maiores cum sint!
+            </p>
+          </div>
+          <div class="container">
+            <h3>Membros</h3>
+            <h3>Carlos Lamark</h3>
+            <h3>Maria Clara</h3>
+            <h3>Richard Lima</h3>
+          </div>
+        </div>
+      </section>
+      <section id="discussions">
+        <div class="background">
+          <div class="background-wrapper">
+            <img class="svg svg1" src="{% static "/homepage/images/blob1.svg" %}"/>
+            <img class="svg svg2" src="{% static "/homepage/images/blob2.svg" %}"/>
+            <img class="svg svg3" src="{% static "/homepage/images/blob3.svg" %}"/>
+            <div class="overlayer"></div>
+          </div>
+        </div>
+        <h1>Discussões Recentes</h1>
+        <div class="discussions-container">
+          <ul>
+            <li>
+              <div class="user-name">
+                <img src="{% static "/homepage/images/profile.svg" %}"
+                alt="perfil"> @mango_jo
+              </div>
+              <div class="comment">AaAaAaAaAaAaAaAaAaAa saphiraaaaa...</div>
+            </li>
+            <li>
+              <div class="user-name">
+                <img src="{% static "/homepage/images/profile.svg" %}"
+                alt="perfil"> @El_pagodinho
+              </div>
+              <div class="comment">Calor da peste, nem dá pra jogar...</div>
+            </li>
+            <li>
+              <div class="user-name">
+                <img src="{% static "/homepage/images/profile.svg" %}"
+                alt="perfil"> @Thiagueta_da_teta
+              </div>
+              <div class="comment">Calor da peste, nem dá pra jogar...</div>
+            </li>
+          </ul>
+        </div>
+      </section>
     </div>
   </body>
+  <script>
+    const JoinButtons = document.getElementsByClassName('join-btn');
+    Array.from(JoinButtons).forEach(button => {
+      button.addEventListener('click', () => {
+        window.location.href = '/login';
+    });
+  });
+  </script>
 </html>
