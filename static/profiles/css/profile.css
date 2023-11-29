@@ -31,6 +31,8 @@ body {
 .user-info img {
   width: 150px;
   border-radius: 50%;
+  aspect-ratio: 1;
+  object-fit: contain;
 }
 
 .user-info .birthday {

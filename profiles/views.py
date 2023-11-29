@@ -15,18 +15,14 @@ def profile(request):
     user_posts = Post.objects.filter(user=request.user)
     user_comments = Comment.objects.filter(user=request.user)
     
+    print(user_profile.avatar_img)
+    
     posts_with_tags = []
     for post in user_posts:
         tags_from_post = post.tag_set.all()
         post_tags = {'post_content': post, 'tags': tags_from_post}
         posts_with_tags.append(post_tags)
         
-        # for tag in tags_from_post:
-        #     print(tag.title)
-    # for post in posts_with_tags:
-    #     for tag in post.tags:
-    #         print(tag.title)
-        # print(post.title.tags)
     
     return render(request, 'pages/profile.html',{'user_profile': user_profile, 'user_posts': posts_with_tags,'user_posts_count': user_posts.count(), 'user_comments_count': user_comments.count()});
  

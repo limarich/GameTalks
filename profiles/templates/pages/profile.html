@@ -8,7 +8,10 @@
     <div class="profile-content">
       <div class="profile-content--statistics">
         <div class="user-info">
-          <img src="{% static "/profiles/images/macaco.png" %}" alt="perfil" />
+          <img
+            src="http://127.0.0.1:8000/media/{{user_profile.avatar_img}}"
+            alt="perfil"
+          />
           <div class="birthday">🎂 {{user_profile.birth_day}}</div>
           <span class="first-access"
             >entrou em {{user_profile.created_at}}</span
