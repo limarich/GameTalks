@@ -22,8 +22,9 @@ class Post(models.Model):
     content = models.CharField(max_length=255) 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Alteração aqui
     thread = models.ForeignKey(Thread, on_delete=models.CASCADE)
+    
     def __str__(self):
         return self.title
 

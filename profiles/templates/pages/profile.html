@@ -1,17 +1,64 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Perfil</title>
-    <link rel="stylesheet" href="{% static '/profiles/css/profile.css' %}" />
-  </head>
-  <body>
-    <div class="d-flex-center">
-      <h1>Meu Perfil</h1>
-      <form id="logout-form" method="post" action="{% url 'account_logout' %}">
-        {% csrf_token %}
-        <input type="submit" value="Sair" />
+{% extends "profiles/base.html" %} {% load static %} {% block content %}
+<head>
+  <title>Perfil</title>
+  <link rel="stylesheet" href="{% static '/profiles/css/profile.css' %}" />
+</head>
+<body>
+  <div class="container">
+    <div class="profile-content">
+      <div class="profile-content--statistics">
+        <div class="user-info">
+          <img src="{% static "/profiles/images/macaco.png" %}" alt="perfil" />
+          <div class="birthday">🎂 {{user_profile.birth_day}}</div>
+          <span class="first-access"
+            >entrou em {{user_profile.created_at}}</span
+          >
+          <h2 class="profile-name">{{user_profile.user.username}}</h2>
+          <span class="user-name">@{{user_profile.user_name}}</span>
+        </div>
+        <div class="discussions-info">
+          <span>Posts: {{user_posts_count}}</span>
+          <span>Comentários: {{user_comments_count}}</span>
+        </div>
+        <button class="bio-btn">Ver Bio</button>
+        <button class="user-edit">
+          <img src="{% static "/profiles/images/Gear.svg" %}" alt="editar
+          perfil"> editar cadastro
+        </button>
+      </div>
+      <form
+        id="logout-form"
+        class="logout"
+        method="post"
+        action="{% url 'account_logout' %}"
+      >
+        {% csrf_token %} <img src="{% static "/profiles/images/SingOut.svg" %}"
+        alt="fazer logout">
+        <input type="submit" value="Logout" />
       </form>
     </div>
-  </body>
-</html>
+    <div class="posts-list">
+      <div class="posts-list--heading">
+        <h2>Meus posts</h2>
+      </div>
+
+      <div class="posts-list--content">
+        {% for post in user_posts %}
+        <div class="post-card">
+          <div class="post-card--tags">
+            {% for tag in post.tags %}
+            <div class="tag">#{{ tag.title }}</div>
+            {% endfor %}
+          </div>
+          <div class="post-card--content">
+            <h4>{{ post.content.title }}</h4>
+            <p>{{ post.post_content.content }}</p>
+          </div>
+          <a href="#">Clique para Acessar</a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</body>
+{% endblock %}
