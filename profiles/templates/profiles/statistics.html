@@ -1,0 +1,23 @@
+<div class="statistics-container" id="statistics-container">
+  <div class="user-info">
+    <div class="flip-card">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <img
+            src="http://127.0.0.1:8000/media/{{user_profile.avatar_img}}"
+            alt="perfil"
+          />
+        </div>
+        <div class="flip-card-back">{{user_profile.bio}}</div>
+      </div>
+    </div>
+    <div class="birthday">🎂 {{user_profile.birth_day}}</div>
+    <span class="first-access">entrou em {{user_profile.created_at}}</span>
+    <h2 class="profile-name">{{user_profile.user.username}}</h2>
+    <span class="user-name">@{{user_profile.user_name}}</span>
+  </div>
+  <div class="discussions-info">
+    <span>Posts: {{user_posts_count}}</span>
+    <span>Comentários: {{user_comments_count}}</span>
+  </div>
+</div>

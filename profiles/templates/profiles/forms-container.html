@@ -1,0 +1,49 @@
+<div class="forms-container" id="forms-container">
+  <form id="profile-form" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="input-control">
+      <label for="user_name"> Nome de usuário </label>
+      <input
+        name="user_name"
+        type="text"
+        placeholder="username"
+        value="{{ user_profile.user_name }}"
+      />
+    </div>
+    <div class="input-control">
+      <label for="birth_day">Data de Nascimento</label>
+      <input
+        name="birth_day"
+        type="date"
+        placeholder="xx/xx/xxxx"
+        value="{{ user_profile.birth_day }}"
+      />
+    </div>
+    <div class="input-control">
+      <label for="email">Email</label>
+      <input
+        name="email"
+        type="email"
+        placeholder="email"
+        value="{{ user_profile.email }}"
+      />
+    </div>
+    <div class="input-control">
+      <label for="bio">Bio</label>
+      <textarea
+        name="bio"
+        cols="30"
+        rows="10"
+        placeholder="sua bio"
+        maxlength="200"
+      >
+{{ user_profile.bio }}</textarea
+      >
+    </div>
+    <div class="input-control">
+      <label for="avatar_img">imagem de perfil</label>
+      <input name="avatar_img" type="file" />
+    </div>
+    <button type="submit" id="submit-profile">Salvar perfil</button>
+  </form>
+</div>

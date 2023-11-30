@@ -1,0 +1,11 @@
+{% load static %}
+<form
+  id="logout-form"
+  class="logout"
+  method="post"
+  action="{% url 'account_logout' %}"
+>
+  {% csrf_token %} <img src="{% static "/profiles/images/SingOut.svg" %}"
+  alt="fazer logout">
+  <input type="submit" value="Logout" />
+</form>
