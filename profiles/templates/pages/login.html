@@ -4,6 +4,9 @@
   <head>
     <title>Login</title>
     <link rel="stylesheet" href="{% static '/profiles/css/styles.css' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
   </head>
   <body>
     <div class="background-img d-flex-center">
@@ -33,11 +36,21 @@
         </div>
         <form method="post" action="{% url 'account_login' %}" id="login-form">
           {% csrf_token %} {{ login_form.non_field_errors }}
-          <div class="fieldWrapper">{{ login_form.login }}</div>
-          <div class="fieldWrapper">
-            {{ login_form.password.label_tag }} {{ login_form.password }}
+          <div class="fieldWrapper inputs-container">
+            <div class="inputs-label">
+                <img src="{% static '/profiles/images/username.svg' %}" alt="">
+                <div>usuário ou email</div>
+            </div>
+            {{ login_form.login }}
           </div>
-          <div class="fieldWrapper">
+          <div class="fieldWrapper inputs-container">
+            <div class="inputs-label">
+                <img src="{% static '/profiles/images/password.svg' %}" alt="">
+                {{ login_form.password.label_tag }}
+            </div>
+            {{ login_form.password }}
+          </div>
+          <div class="remember-login">
             <input
               type="checkbox"
               id="id_remember"
@@ -51,7 +64,9 @@
             />
             <label for="id_remember">{% trans 'Remember Me' %}</label>
           </div>
-          <input type="submit" value="{% trans 'Sign In' %}" />
+          <div class="submit-button">
+            <input type="submit" value="{% trans 'Sign In' %}" />
+          </div>
         </form>
 
         <form
@@ -61,20 +76,22 @@
           style="display: none"
         >
           {% csrf_token %}
-          <div class="fieldWrapper">
+          <div class="fieldWrapper inputs-container">
             {{ signup_form.username.label_tag }} {{ signup_form.username }}
           </div>
-          <div class="fieldWrapper">
+          <div class="fieldWrapper inputs-container">
             {{ signup_form.email.label_tag }} {{ signup_form.email }}
           </div>
-          <div class="fieldWrapper">
+          <div class="fieldWrapper inputs-container">
             {{ signup_form.password1.label_tag }} {{ signup_form.password1 }}
           </div>
-          <div class="fieldWrapper">
+          <div class="fieldWrapper inputs-container">
             {{ signup_form.password2.label_tag }} {{ signup_form.password2 }}
           </div>
 
-          <input type="submit" value="{% trans 'Sign Up' %}" />
+          <div class="submit-button">
+            <input type="submit" value="{% trans 'Sign Up' %}" />
+          </div>
         </form>
       </div>
     </div>
