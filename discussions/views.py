@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,  get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
-from .models import Post, Thread
+from .models import Post, Thread, Comment
 from django.shortcuts import render, redirect
 from django.db.models import Count
 
@@ -30,3 +30,27 @@ def explore(request):
         threads_and_posts[thread] = list(posts)
     
     return render(request, 'pages/explore.html', {'threads_and_posts': threads_and_posts})
+
+@login_required
+def post(request,post_id):
+    post = get_object_or_404(Post, post_id=post_id)
+    comments = Comment.objects.filter(post=post)
+    
+    return render(request, 'pages/post.html', {'post': post, 'comments': comments})
+
+@login_required
+def add_comment_to_post(request):
+    if request.method == 'POST':
+        post_id = request.POST.get('post_id')
+        post = get_object_or_404(Post, pk=post_id)
+        
+        comment_content = request.POST.get('comment_content')
+        if comment_content:
+            comment = Comment.objects.create(
+                content=comment_content,
+                user=request.user,
+                post=post
+            )
+            return redirect('discussions:post', post_id=post_id)
+    
+    return HttpResponse("Erro ao adicionar comentário.")
