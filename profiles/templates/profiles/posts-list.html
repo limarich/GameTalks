@@ -7,15 +7,15 @@
     {% if user_posts %} {% for post in user_posts %}
     <div class="post-card">
       <div class="post-card--tags">
-        {% for tag in post.tags %}
+        {% for tag in post.tag_set.all %}
         <div class="tag">#{{ tag.title }}</div>
         {% endfor %}
       </div>
       <div class="post-card--content">
         <h4>{{ post.content.title }}</h4>
-        <p>{{ post.post_content.content }}</p>
+        <p>{{ post.content }}</p>
       </div>
-      <a href="#">Clique para Acessar</a>
+      <a href="/post/{{post.post_id}}/">Clique para Acessar</a>
     </div>
     {% endfor %} {% else %}
     <span class="not-found">Nenhum Post encontrado :-/</span>

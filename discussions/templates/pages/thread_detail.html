@@ -1,0 +1,41 @@
+{% extends "../base.html" %} {% load static %} {% block content %}
+<head>
+  <title>{{thread.title}}</title>
+  <link rel="stylesheet" href="{% static '/thread-detail/css/index.css' %}" />
+</head>
+<body>
+  <section>
+    <div class="heading">
+      <h1>{{thread.title}}</h1>
+      <h3>{{thread.slug}}</h3>
+    </div>
+
+    <div class="content-wrapper">
+      {% if posts_with_details %}
+      <ul class="post-list">
+        {% for item in posts_with_details %}
+
+        <li>
+          <a href="/post/{{item.post.post_id}}/">
+            <div class="tags-group">
+              {% for tag in item.tags %}
+              <div class="tag">#{{tag.title}}</div>
+              {% endfor %}
+            </div>
+            <h1 class="post-title">{{ item.post.title }}</h1>
+            <div class="info">
+              <h1 class="post-comments">
+                {{ item.comments_count }} comentários
+              </h1>
+            </div>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <span>Nenhum post encontrado :-/</span>
+      {% endif %}
+    </div>
+  </section>
+</body>
+{% endblock %}

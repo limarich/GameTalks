@@ -13,24 +13,22 @@ def login(request):
 @login_required
 def profile(request):
     user_profile = Profile.objects.filter(user=request.user).first()
-    if(request.method == 'GET'):
+    if request.method == 'GET':
         user_has_profile = bool(user_profile)
         
-        user_posts = Post.objects.filter(user=request.user)
+        user_posts = Post.objects.filter(user=request.user).prefetch_related('tag_set')
         user_comments = Comment.objects.filter(user=request.user)
         
-        posts_with_tags = []
-        for post in user_posts:
-            tags_from_post = post.tag_set.all()
-            post_tags = {'post_content': post, 'tags': tags_from_post}
-            posts_with_tags.append(post_tags)
-            
-            
         user_profile.birth_day = user_profile.birth_day.strftime("%d/%m/%Y")
         user_profile.created_at = user_profile.created_at.strftime("%d/%m/%Y")
         
-        return render(request, 'pages/profile.html',{'user_profile': user_profile, 'user_posts': posts_with_tags,'user_posts_count': user_posts.count(), 'user_comments_count': user_comments.count(), 'user_has_profile': user_has_profile});
-    
+        return render(request, 'pages/profile.html', {
+            'user_profile': user_profile,
+            'user_posts': user_posts,
+            'user_posts_count': user_posts.count(),
+            'user_comments_count': user_comments.count(),
+            'user_has_profile': user_has_profile
+        })
     if request.method == 'POST':
         if user_profile:
             birth_day = request.POST.get('birth_day')
