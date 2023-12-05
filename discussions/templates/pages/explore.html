@@ -4,15 +4,32 @@
   <link rel="stylesheet" href="{% static '/explore/css/explore.css' %}" />
 </head>
 <body>
-  {% if threads_and_posts %} {% for thread, posts in threads_and_posts.items %}
-  <div class="thread-title">{{ thread.title }}</div>
-  <ul class="post-list">
-    {% for post in posts %}
-    <li>{{ post.title }}</li>
-    {% endfor %}
-  </ul>
-  {% endfor %} {% else %}
-  <span>Nenhuma thread encontrada :-/</span>
-  {% endif %}
+  <section>
+    <div class="heading">
+      <h1>Explorar</h1>
+      <h3>principais tópicos em alta</h3>
+    </div>
+
+    <div class="content-wrapper">
+      {% if forums_and_threads %} {% for forum_title, threads_info in forums_and_threads.items %}
+      <div class="category-title">{{ forum_title }}</div>
+      <ul class="thread-list">
+        {% for thread_info in threads_info %}
+        <li>
+          <a href="/thread/{{thread_info.thread.thread_id}}/">
+            <h1 class="thread-title">{{ thread_info.thread.title }}</h1>
+            <div class="info">
+              <h1 class="thread-title">{{ thread_info.thread.slug }}</h1>
+              <h1 class="thread-posts">{{ thread_info.posts_count }} posts</h1>
+            </div>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endfor %} {% else %}
+      <span>Nenhum fórum encontrado :-/</span>
+      {% endif %}
+    </div>
+  </section>
 </body>
 {% endblock %}
