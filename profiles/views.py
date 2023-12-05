@@ -25,6 +25,9 @@ def profile(request):
             post_tags = {'post_content': post, 'tags': tags_from_post}
             posts_with_tags.append(post_tags)
             
+            
+        user_profile.birth_day = user_profile.birth_day.strftime("%d/%m/%Y")
+        user_profile.created_at = user_profile.created_at.strftime("%d/%m/%Y")
         
         return render(request, 'pages/profile.html',{'user_profile': user_profile, 'user_posts': posts_with_tags,'user_posts_count': user_posts.count(), 'user_comments_count': user_comments.count(), 'user_has_profile': user_has_profile});
     
