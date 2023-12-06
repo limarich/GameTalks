@@ -3,8 +3,10 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
 from .models import Post, Thread, Comment, Tag
+from profiles.models import Profile
 from django.shortcuts import render, redirect
 from django.db.models import Count
+from datetime import datetime
 
 def teste(request):
     return HttpResponse("ok")
@@ -59,8 +61,11 @@ def thread_detail(request, thread_id):
 def post(request,post_id):
     post = get_object_or_404(Post, post_id=post_id)
     comments = Comment.objects.filter(post=post)
+    tags = Tag.objects.filter(post=post)
+    post.created_at = post.created_at.strftime("%d/%m/%Y")
+    profile = Profile.objects.filter(user=request.user).first()
     
-    return render(request, 'pages/post.html', {'post': post, 'comments': comments})
+    return render(request, 'pages/post.html', {'post': post, 'comments': comments, 'tags': tags, 'profile': profile})
 
 @login_required
 def add_comment_to_post(request):
@@ -78,14 +83,3 @@ def add_comment_to_post(request):
             return redirect('discussions:post', post_id=post_id)
     
     return HttpResponse("Erro ao adicionar comentário.")
-
-# @login_required
-# def explore(request):
-#     threads_with_most_posts = Thread.objects.annotate(num_posts=Count('post')).order_by('-num_posts')
-    
-#     threads_and_posts = {}
-#     for thread in threads_with_most_posts:
-#         posts = Post.objects.filter(thread=thread)
-#         threads_and_posts[thread] = list(posts)
-    
-#     return render(request, 'pages/explore.html', {'threads_and_posts': threads_and_posts})

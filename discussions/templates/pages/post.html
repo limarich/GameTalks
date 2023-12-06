@@ -1,31 +1,49 @@
 {% extends "../base.html" %} {% load static %} {% block content %}
 <head>
   <title>Post</title>
-  <link rel="stylesheet" href="{% static '/explore/css/explore.css' %}" />
+  <link rel="stylesheet" href="{% static '/post/css/style.css' %}" />
 </head>
 <body>
-  <div class="post-details">
-    <h2>{{ post.title }}</h2>
-    <p>{{ post.content }}</p>
-  </div>
-
-  <div class="comments-section">
-    <h3>Comentários</h3>
-    <ul class="comments-list">
-      {% for comment in comments %}
-      <li>{{ comment.content }}</li>
-      {% endfor %}
-    </ul>
-
-    <div class="new-comment-form">
-      <h3>Novo Comentário</h3>
-      <form method="post" action="{% url 'discussions:add_comment_to_post' %}">
-        {% csrf_token %}
-        <input type="hidden" name="post_id" value="{{post.post_id}}" />
-        <textarea name="comment_content" rows="4" cols="50"></textarea>
-        <input type="submit" value="Enviar Comentário" />
-      </form>
+  <section>
+    <div class="post">
+      <div class="tags-group">
+        {% for tag in tags %}
+        <div class="tag">#{{tag.title}}</div>
+        {% endfor %}
+      </div>
+      <h1 class="post-title">{{ post.title }}</h1>
+      <p class="post-subtitle">
+        <span>por: @{{ profile.user_name}}</span>
+        <span>em: {{post.created_at}}</span>
+      </p>
+      <div class="info">
+        <p>{{ post.content }}</p>
+      </div>
     </div>
-  </div>
+
+    <div class="comments-section">
+      <h3>Comentários</h3>
+      <ul class="comments-list">
+        {% for comment in comments %}
+        <li class="post">
+          <div class="content">{{ comment.content }}</div>
+        </li>
+        {% endfor %}
+      </ul>
+
+      <div class="new-comment-form">
+        <h3>Adicionar Comentário</h3>
+        <form
+          method="post"
+          action="{% url 'discussions:add_comment_to_post' %}"
+        >
+          {% csrf_token %}
+          <input type="hidden" name="post_id" value="{{post.post_id}}" />
+          <textarea name="comment_content" rows="4" cols="50"></textarea>
+          <input type="submit" value="Enviar Comentário" />
+        </form>
+      </div>
+    </div>
+  </section>
 </body>
 {% endblock %}
