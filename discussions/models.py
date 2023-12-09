@@ -16,6 +16,15 @@ class Thread(models.Model):
     def __str__(self):
         return self.title
     
+    
+class Tag(models.Model):
+    tag_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    title = models.CharField(max_length=100, unique=True) 
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
 class Post(models.Model):
     post_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=100) 
@@ -24,18 +33,12 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE) 
     thread = models.ForeignKey(Thread, on_delete=models.CASCADE)
+    tags = models.ManyToManyField(Tag)
     
     def __str__(self):
         return self.title
 
-class Tag(models.Model):
-    tag_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    title = models.CharField(max_length=100) 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    post = models.ManyToManyField(Post)
-    def __str__(self):
-        return self.title
+
 
 class Comment(models.Model):
     comment_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

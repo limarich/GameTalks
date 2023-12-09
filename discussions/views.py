@@ -35,7 +35,7 @@ def explore(request):
 
         forums_and_threads[forum_title].append({'thread': thread, 'posts_count': thread.num_posts})
 
-    print(forums_and_threads)
+    # print(forums_and_threads)
 
     return render(request, 'pages/explore.html', {'forums_and_threads': forums_and_threads})
 
@@ -46,12 +46,11 @@ def thread_detail(request, thread_id):
     posts_with_details = []
     for post in posts:
         comments_count = Comment.objects.filter(post=post).count()
-        tags = Tag.objects.filter(post=post)
         
         post_details = {
             'post': post,
             'comments_count': comments_count,
-            'tags': tags,
+            'tags': post.tags.all(),
         }
         posts_with_details.append(post_details)
     
@@ -61,11 +60,17 @@ def thread_detail(request, thread_id):
 def post(request,post_id):
     post = get_object_or_404(Post, post_id=post_id)
     comments = Comment.objects.filter(post=post)
-    tags = Tag.objects.filter(post=post)
+    tags = post.tags.all()
     post.created_at = post.created_at.strftime("%d/%m/%Y")
     profile = Profile.objects.filter(user=request.user).first()
     
     return render(request, 'pages/post.html', {'post': post, 'comments': comments, 'tags': tags, 'profile': profile})
+
+@login_required
+def create_thread(request):
+    
+    return render(request, 'pages/create-thread.html')
+
 
 @login_required
 def add_comment_to_post(request):

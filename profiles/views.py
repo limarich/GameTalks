@@ -16,11 +16,16 @@ def profile(request):
     if request.method == 'GET':
         user_has_profile = bool(user_profile)
         
-        user_posts = Post.objects.filter(user=request.user).prefetch_related('tag_set')
+        user_posts = Post.objects.filter(user=request.user).prefetch_related('tags')
         user_comments = Comment.objects.filter(user=request.user)
         
         user_profile.birth_day = user_profile.birth_day.strftime("%d/%m/%Y")
         user_profile.created_at = user_profile.created_at.strftime("%d/%m/%Y")
+        
+        for post in user_posts:
+            print(f"Post: {post.title}")
+            for tag in post.tags.all():
+                print(f"Tag: {tag.title}")
         
         return render(request, 'pages/profile.html', {
             'user_profile': user_profile,

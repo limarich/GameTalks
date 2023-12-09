@@ -10,6 +10,7 @@ urlpatterns = [
     path('thread/<uuid:thread_id>/', views.thread_detail, name="thread_detail"),
     path('post/<uuid:post_id>/', views.post, name="post"),
     path('post/add_comment/', views.add_comment_to_post, name="add_comment_to_post"),
+    path('thread/create_thread', views.create_thread, name="create_thread"),
     path('', views.homepage, name="homepage"),
     
 ]
