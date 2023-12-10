@@ -46,6 +46,8 @@
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
+    var baseUrl = window.location.origin;
+    var newPostUrl = baseUrl + "/post/create_post/";
     // Obtém o token CSRF do cookie
     function getCSRFToken() {
       const cookieValue = document.cookie.match(/csrftoken=([^ ;]+)/)[1];
@@ -66,10 +68,8 @@
       var tags = $("#hiddenSelectedTags").val();
       var thread_id = $("#threadsSelect").val();
 
-      console.log("id da thread: ", thread_id);
-
       $.ajax({
-        url: "new_post",
+        url: newPostUrl,
         method: "POST",
         headers: { "X-CSRFToken": getCSRFToken() },
         data: {

@@ -7,6 +7,7 @@
   <div class="post-container">
     <h1>Editar Post</h1>
     <form id="postForm" class="form">
+      <input type="hidden" id="postId" value="{{post_id}}" />
       <div class="row">
         <div class="form-control">
           <span>Título</span>
@@ -68,11 +69,11 @@
       var description = $("#postDescription").val();
       var tags = $("#hiddenSelectedTags").val();
       var thread_id = $("#threadsSelect").val();
-
-      console.log("id da thread: ", thread_id);
+      var post_id = $("#postId").val();
+      var editPostUrl = `${window.location.origin}/post/edit/${post_id}/`;
 
       $.ajax({
-        url: "",
+        url: editPostUrl,
         method: "POST",
         headers: { "X-CSRFToken": getCSRFToken() },
         data: {

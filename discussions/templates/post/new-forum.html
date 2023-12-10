@@ -37,9 +37,11 @@
       var category_id = $("#categoriesSelect").val();
 
       var csrftoken = getCSRFToken();
+      var baseUrl = window.location.origin;
+      var URL = baseUrl + "/post/create_post/new_forum";
 
       $.ajax({
-        url: "http://127.0.0.1:8000/post/create_post/new_forum",
+        url: URL,
         method: "POST",
         data: {
           forum_title: title,

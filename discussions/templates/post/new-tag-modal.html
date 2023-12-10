@@ -24,8 +24,10 @@
     var tagTitle = $("#tagName").val();
     var csrftoken = getCSRFToken(); // Obtém o token CSRF do cookie
     // Faz a requisição AJAX para criar uma nova tag
+    var baseUrl = window.location.origin;
+    var URL = baseUrl + "/post/create_post/new_tag";
     $.ajax({
-      url: "new_tag", 
+      url: URL, 
       method: "POST",
       headers: { "X-CSRFToken": csrftoken },
       data: {

@@ -158,7 +158,7 @@ def edit_post(request, post_id):
     
     tags = post.tags.all()
 
-    return render(request, 'pages/edit-post.html', {'post': post, 'threads': threads, 'forums': forums, 'categories': categories, 'tags': tags })
+    return render(request, 'pages/edit-post.html', {'post': post, 'post_id': post_id, 'threads': threads, 'forums': forums, 'categories': categories, 'tags': tags })
 
 @login_required
 def tag_list(request):

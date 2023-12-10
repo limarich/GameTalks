@@ -52,9 +52,11 @@
     var threadForum = $("#forumsSelect").val();
 
     var csrftoken = getCSRFToken();
+    var baseUrl = window.location.origin;
+    var URL = baseUrl + "/post/create_post/create_thread";
 
     $.ajax({
-      url: "http://127.0.0.1:8000/post/create_post/create_thread",
+      url: URL,
       method: "POST",
       data: {
         title: threadTitle,
