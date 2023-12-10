@@ -5,7 +5,7 @@
       <div class="flip-card-inner">
         <div class="flip-card-front">
           <img
-            src="http://127.0.0.1:8000/media/{{user_profile.avatar_img}}"
+            src="{{ request.scheme }}://{{ request.get_host }}{{ user_profile.avatar_img.url }}"
             alt="perfil"
           />
         </div>
