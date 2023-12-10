@@ -1,8 +1,9 @@
 from django.shortcuts import render,  get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 
 from .models import Post, Thread, Comment, Tag
+from categories.models import Forum
 from profiles.models import Profile
 from django.shortcuts import render, redirect
 from django.db.models import Count
@@ -35,7 +36,6 @@ def explore(request):
 
         forums_and_threads[forum_title].append({'thread': thread, 'posts_count': thread.num_posts})
 
-    # print(forums_and_threads)
 
     return render(request, 'pages/explore.html', {'forums_and_threads': forums_and_threads})
 
@@ -66,10 +66,7 @@ def post(request,post_id):
     
     return render(request, 'pages/post.html', {'post': post, 'comments': comments, 'tags': tags, 'profile': profile})
 
-@login_required
-def create_thread(request):
-    
-    return render(request, 'pages/create-thread.html')
+
 
 
 @login_required
@@ -88,3 +85,83 @@ def add_comment_to_post(request):
             return redirect('discussions:post', post_id=post_id)
     
     return HttpResponse("Erro ao adicionar comentário.")
+
+
+
+@login_required
+def create_post(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        tag_titles = request.POST.getlist('tags') 
+        
+        if title and content:
+            new_post = Post.objects.create(
+                title=title,
+                content=content,
+                user=request.user  
+            )
+            
+            if tag_titles:
+                for tag_title in tag_titles:
+                    tag, _ = Tag.objects.get_or_create(title=tag_title)
+                    new_post.tags.add(tag)
+            
+            
+            return redirect('discussions:post', post_id=new_post.post_id)  
+
+    threads = Thread.objects.all()
+    forums = Forum.objects.all()
+  
+    return render(request, 'pages/create-post.html', {'threads': threads, 'forums': forums})
+
+@login_required
+def tag_list(request):
+    tags = Tag.objects.all().values('tag_id', 'title')  
+    
+    tags_list = list(tags) 
+    
+    return JsonResponse({'tags': tags_list})
+
+@login_required
+def create_tag(request):
+    if request.method == 'POST':
+        tag_title = request.POST.get('tag_title')
+        
+        if tag_title:
+            tag, created = Tag.objects.get_or_create(title=tag_title)
+            if created:
+               
+                return JsonResponse({'tag_id': tag.tag_id, 'tag_title': tag.title})
+            
+           
+            return JsonResponse({'message': 'Tag already exists'})
+    
+    return render(request, 'pages/create-tag.html')
+
+@login_required
+def thread_list(request):
+    threads = Thread.objects.all()
+    forum = Forum.objects.all()
+    return render(request, 'threads_list.html', {'threads': threads})
+
+@login_required
+def create_thread(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        slug = request.POST.get('slug')
+        forum_id = request.POST.get('forum_id')  
+
+
+        forum = Forum.objects.get(id=forum_id) 
+
+        thread = Thread.objects.create(title=title, slug=slug, forum=forum)
+
+        response_data = {
+            'id': thread.thread_id,
+            'title': thread.title,
+            'slug': thread.slug,
+        }
+        return JsonResponse(response_data)
+        
+    return render(request, 'pages/create-thread.html')

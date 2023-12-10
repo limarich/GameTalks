@@ -1,0 +1,48 @@
+<div id="newTagModal" style="display: none;" >
+  <form id="newTagForm" class="form">
+    {% csrf_token %}
+    <div class="form-control">
+        <span>adicionar tag</span>
+        <input type="text" id="tagName" placeholder="Nome da Tag" />
+      </div>
+      <div class="form-control">
+        <br>
+        <button type="submit" class="create-btn">Criar tag</button>
+      </div>
+    </form>
+  </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+
+  // Envia o formulário de nova tag ao clicar em "Salvar"
+  $("#newTagForm").submit(function (e) {
+    e.preventDefault();
+
+    // Obtém o valor do campo de título da tag
+    var tagTitle = $("#tagName").val();
+    var csrftoken = getCSRFToken(); // Obtém o token CSRF do cookie
+    // Faz a requisição AJAX para criar uma nova tag
+    $.ajax({
+      url: "new_tag", 
+      method: "POST",
+      headers: { "X-CSRFToken": csrftoken },
+      data: {
+        tag_title: tagTitle,
+      },
+      success: function (response) {
+        // Atualiza dinamicamente a lista de tags no frontend após criar uma nova tag
+        var newTag = "<li>" + response.tag_title + "</li>";
+        $("#tagsList").append(newTag);
+
+        // Fecha o modal de criação de nova tag após adicionar a tag
+        $("#newTagModal").hide();
+        $("#tagsModal").show(); // Mostra novamente o modal de tags
+      },
+      error: function (xhr, status, error) {
+        console.error(error); 
+      },
+    });
+  });
+</script>

@@ -1,0 +1,60 @@
+{% extends "../base.html" %} {% load static %} {% block content %}
+<head>
+  <title>Novo Post</title>
+  <link rel="stylesheet" href="{% static '/create-post/css/style.css' %}" />
+</head>
+<body>
+  <div class="post-container">
+    <h1>Novo Post</h1>
+    <form id="postForm" class="form">
+      <div class="row">
+        <div class="form-control">
+          <span>Título</span>
+          <input type="text" id="postTitle" />
+        </div>
+
+        {% include "post/threads-list.html" %}
+      </div>
+      <div class="row">
+        <div class="form-control">
+          <span>Descrição</span>
+          <input type="text" id="postDescription" />
+        </div>
+
+        <div class="select-wrapper">
+          <button id="openTagsModal">Adicionar Tags</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-control">
+          <span>Conteúdo</span>
+          <textarea id="postContent"></textarea>
+        </div>
+      </div>
+      <div id="selectedTags" class="tags-group"></div>
+      <input type="submit" value="Salvar" class="create-btn" />
+    </form>
+    {% include "post/new-thread-modal.html" %}
+  </div>
+  {% include "post/tags-list.html" %}
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    // Obtém o token CSRF do cookie
+    function getCSRFToken() {
+      const cookieValue = document.cookie.match(/csrftoken=([^ ;]+)/)[1];
+      return cookieValue;
+    }
+
+    $("#openTagsModal").click(function () {
+      $("#tagsModal").show();
+      $("#tagsList").show();
+      $("#openNewTagModal").show();
+    });
+
+    $("#postForm").submit(function (e) {
+      e.preventDefault();
+    });
+  </script>
+  {% endblock %}
+</body>

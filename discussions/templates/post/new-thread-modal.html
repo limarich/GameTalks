@@ -1,0 +1,72 @@
+<div id="newThreadModal" style="display: none">
+  <form id="newThreadForm" class="form">
+    {% csrf_token %}
+    <div id="forumList">
+      <div class="row start">
+        <div class="select-wrapper">
+          <div class="form-control">
+            <span>Forum</span>
+            <select id="forumsSelect">
+              {% for forum in forums %}
+              <option value="{{ forum.id }}">{{ forum.title }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-controler">
+            <br />
+            <button id="openNewForumModal">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-control">
+        <span>Título</span>
+        <input type="text" id="threadTitle" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-control">
+        <span>Descrição</span>
+        <textarea id="threadDescription"></textarea>
+      </div>
+    </div>
+    <button type="submit" id="submitNew" class="create-btn">
+      Salvar Thread
+    </button>
+  </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $("#submitNew").click((e) => {
+    e.preventDefault();
+
+    console.log("Submissão do formulário acionada"); // Adicionando um log para verificar se o evento é chamado
+
+    var threadTitle = $("#threadTitle").val();
+    var threadDescription = $("#threadDescription").val();
+    var threadForum = $("#forumsSelect").val();
+
+    var csrftoken = getCSRFToken();
+
+    $.ajax({
+      url: "create_thread",
+      method: "POST",
+      data: {
+        title: threadTitle,
+        slug: threadDescription,
+        forum_id: threadForum,
+      },
+      headers: { "X-CSRFToken": csrftoken },
+      success: function (response) {
+        var newThreadOption =
+          "<option value='" + response.id + "'>" + response.title + "</option>";
+        $("#threadsSelect").append(newThreadOption);
+        $("#newThreadModal").hide();
+      },
+      error: function (xhr, status, error) {
+        console.error(error);
+      },
+    });
+  });
+</script>

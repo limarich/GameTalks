@@ -1,0 +1,65 @@
+<div id="tagsModal" class="form" style="display: none">
+  <h3>Selecione as Tags</h3>
+  <form id="tagsForm" class="tags-form">
+    <div id="checkboxesList" class="checkboxes-list"></div>
+    <button id="openNewTagModal" class="add-btn">+ Nova Tag</button>
+  </form>
+  {% include "post/new-tag-modal.html" %}
+  <button class="create-btn" id="save-tags-btn">Salvar Tags</button>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $.ajax({
+    url: "/tags",
+    method: "GET",
+    success: function (response) {
+      // Limpa a lista de tags antes de adicionar novos elementos
+      $("#checkboxesList").empty();
+
+      // Adiciona as tags recuperadas como checkboxes na lista
+      response.tags.forEach(function (tag) {
+        var checkbox = $('<input type="checkbox">')
+          .attr("id", "tag_" + tag.id)
+          .attr("name", "tags")
+          .val(tag.id);
+        var label = $("<label>")
+          .attr("for", "tag_" + tag.id)
+          .text(tag.title);
+
+        var container = $("<div>").addClass("checkbox-control"); // Novo container div para cada checkbox
+        container.append(checkbox).append(label); // Adicionando o checkbox e a label no container
+        $("#checkboxesList").append(container); // Adiciona o contêiner na lista
+      });
+    },
+    error: function (xhr, status, error) {
+      console.error(error);
+    },
+  });
+  $("#save-tags-btn").click((e) => {
+    console.log("asdasdd");
+    e.preventDefault();
+    var selectedTags = [];
+    var selectedTagsNames = [];
+
+    $("#checkboxesList input[type='checkbox']:checked").each(function () {
+      selectedTags.push($(this).val());
+    });
+
+    $("#checkboxesList input[type='checkbox']:checked").each(function () {
+      selectedTagsNames.push($(this).next("label").text());
+    });
+
+    $("#selectedTags").empty();
+
+    selectedTagsNames.forEach(function (tagName) {
+      $("#selectedTags").append(
+        "<span class='tag'>" + "#" + tagName + "</span>"
+      );
+    });
+    $("#tagsModal").hide();
+  });
+  // Abre o modal de cadastro de nova tag ao clicar em "Nova Tag"
+  $("#openNewTagModal").click(function () {
+    $("#newTagModal").show();
+  });
+</script>

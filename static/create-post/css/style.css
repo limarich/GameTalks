@@ -1,0 +1,211 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  background: #0d0a2c;
+  width: 100%;
+  height: 100vh;
+}
+section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+h1 {
+  color: #fff;
+  font-weight: 500;
+}
+
+.form {
+  width: 60%;
+  padding: 2rem 3rem 1rem;
+  border-radius: 20px;
+  background: #141325;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#postForm {
+  margin-top: 2rem;
+}
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.row.start {
+  justify-content: flex-start;
+}
+.form-control {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.form-control span {
+  color: #fff;
+  font-weight: 500;
+}
+.form-control input,
+.form-control select,
+.form-control textarea {
+  all: unset;
+  border: solid 1px #fff;
+  border-radius: 8px;
+  height: 2.5rem;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+.form-control textarea {
+  height: 150px;
+}
+.form-control select option {
+  color: #000;
+}
+.form-control input::placeholder {
+  color: #fff;
+}
+
+.select-wrapper button {
+  all: unset;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 600;
+  font-size: 2rem;
+}
+.select-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+#openTagsModal {
+  font-size: 1.5rem;
+  text-decoration: underline;
+  text-align: center;
+}
+
+.create-btn {
+  all: unset;
+  cursor: pointer;
+  align-self: center;
+  padding: 0.5rem 0.5rem;
+  background: rgb(131, 58, 180);
+  background: linear-gradient(
+    90deg,
+    rgba(131, 58, 180, 1) 0%,
+    rgba(117, 82, 224, 1) 73%
+  );
+  border-radius: 8px;
+  color: #fff;
+}
+
+#tagsModal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 75vh;
+}
+.checkboxes-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  overflow: auto;
+}
+.checkbox-control {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  gap: 1rem;
+}
+/* Estilos para a lista de checkboxes */
+.checkboxes-list label {
+  display: block;
+  margin-bottom: 8px;
+  cursor: pointer;
+  position: relative;
+  color: #fff;
+}
+#tagsModal {
+  justify-content: start;
+}
+#tagsModal h3 {
+  margin-bottom: 2rem;
+  color: #fff;
+}
+.tags-form {
+  height: 100%;
+}
+.add-btn {
+  all: unset;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-decoration: underline;
+  cursor: pointer;
+  color: #fff;
+  margin-top: 1rem;
+}
+
+#newTagModal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+#newTagForm {
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  width: 60%;
+}
+
+.tags-group {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.tags-group .tag {
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  color: #ea6a0d;
+  border: 1px solid #ea6a0d;
+  font-size: 1rem;
+}
+.tags-group .tag:nth-child(2n) {
+  border-color: #eb2a69;
+  color: #eb2a69;
+}
+.tags-group .tag:nth-child(3n) {
+  border-color: #37136d;
+  color: #37136d;
+}
+#newThreadForm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 75vh;
+}
+
+#forumsSelect {
+  width: 200px;
+}
