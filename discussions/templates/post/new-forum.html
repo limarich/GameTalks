@@ -1,0 +1,80 @@
+<div id="newForumModal" style="display: none">
+  <h3>Novo Forum</h3>
+  <form id="newForumForm" action="" class="form">
+    <div class="row">
+      <div class="form-control">
+        <span>Nome</span>
+        <input type="text" id="forum_title" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-control">
+        <span>Descrição</span>
+        <input type="text" id="forum_description" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-control">
+        <span>Categoria</span>
+        <select id="categoriesSelect">
+          <option value="" disabled>escolha uma opção</option>
+          {% for category in categories %}
+          <option value="{{ category.category_id }}">
+            {{ category.title }}
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  </form>
+  <button class="create-btn" id="newForumForm">Criar Forum</button>
+  <script>
+    $("#newForumForm").click((e) => {
+      e.preventDefault();
+
+      var title = $("#forum_title").val();
+      var description = $("#forum_description").val();
+      var category_id = $("#categoriesSelect").val();
+
+      var csrftoken = getCSRFToken();
+
+      $.ajax({
+        url: "new_forum",
+        method: "POST",
+        data: {
+          forum_title: title,
+          forum_description: description,
+          category_id: category_id,
+        },
+        headers: { "X-CSRFToken": csrftoken },
+        success: function (response) {
+          $("#newForumModal").hide();
+          updateForumList();
+        },
+        error: function (xhr, status, error) {
+          // Lidar com erros, se necessário
+          console.error(error);
+        },
+      });
+    });
+    function updateForumList() {
+      $.ajax({
+        url: "forums",
+        method: "GET",
+        success: function (response) {
+          $("#forumsSelect").empty();
+
+          // Adiciona os fóruns atualizados à lista
+          response.forEach(function (forum) {
+            $("#forumsSelect").append(
+              "<option value='" + forum.id + "'>" + forum.title + "</option>"
+            );
+          });
+        },
+        error: function (xhr, status, error) {
+          console.error(error);
+        },
+      });
+    }
+  </script>
+</div>

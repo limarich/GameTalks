@@ -15,6 +15,8 @@ urlpatterns = [
     path('tags', views.tag_list, name="tags_list"),
     path('post/create_post/new_tag', views.create_tag, name="create_tag"),
     path('post/create_post/create_thread', views.create_thread, name="create_thread"),
+    path('post/create_post/new_forum', views.create_forum, name="create_forum"),
+    path('post/create_post/forums', views.forum_list, name="forum_list"),
     path('', views.homepage, name="homepage"),
     
 ]

@@ -32,9 +32,9 @@
         tag_title: tagTitle,
       },
       success: function (response) {
-        // Atualiza dinamicamente a lista de tags no frontend após criar uma nova tag
-        var newTag = "<li>" + response.tag_title + "</li>";
-        $("#tagsList").append(newTag);
+        // Adiciona a nova tag
+        var newTag = "<div class='checkbox-control'><input type='checkbox' id='tag_" + response.tag_id + "' name='tags' value='" + response.tag_id + "'><label for='tag_" + response.tag_id + "'>" + response.tag_title + "</label></div>";
+        $("#checkboxesList").append(newTag);
 
         // Fecha o modal de criação de nova tag após adicionar a tag
         $("#newTagModal").hide();

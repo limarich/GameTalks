@@ -14,7 +14,7 @@
           </div>
           <div class="form-controler">
             <br />
-            <button id="openNewForumModal">+</button>
+            <button id="openNewForumModal" type="button">+</button>
           </div>
         </div>
       </div>
@@ -31,6 +31,9 @@
         <textarea id="threadDescription"></textarea>
       </div>
     </div>
+
+    {% include "post/new-forum.html" %}
+
     <button type="submit" id="submitNew" class="create-btn">
       Salvar Thread
     </button>
@@ -38,6 +41,9 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+  $("#openNewForumModal").click((e) => {
+    $("#newForumModal").show();
+  });
   $("#submitNew").click((e) => {
     e.preventDefault();
 

@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 
 from .models import Post, Thread, Comment, Tag
-from categories.models import Forum
+from categories.models import Forum, Category
 from profiles.models import Profile
 from django.shortcuts import render, redirect
 from django.db.models import Count
@@ -112,8 +112,10 @@ def create_post(request):
 
     threads = Thread.objects.all()
     forums = Forum.objects.all()
+    categories = Category.objects.all()
   
-    return render(request, 'pages/create-post.html', {'threads': threads, 'forums': forums})
+  
+    return render(request, 'pages/create-post.html', {'threads': threads, 'forums': forums, 'categories': categories})
 
 @login_required
 def tag_list(request):
@@ -129,13 +131,14 @@ def create_tag(request):
         tag_title = request.POST.get('tag_title')
         
         if tag_title:
-            tag, created = Tag.objects.get_or_create(title=tag_title)
-            if created:
-               
-                return JsonResponse({'tag_id': tag.tag_id, 'tag_title': tag.title})
-            
-           
-            return JsonResponse({'message': 'Tag already exists'})
+            try:
+                tag, created = Tag.objects.get_or_create(title=tag_title)
+                if created:
+                    return JsonResponse({'tag_id': tag.tag_id, 'tag_title': tag.title})
+                else:
+                    return JsonResponse({'message': 'Tag already exists'})
+            except Exception as e:
+                return JsonResponse({'message': str(e)})
     
     return render(request, 'pages/create-tag.html')
 
@@ -144,6 +147,12 @@ def thread_list(request):
     threads = Thread.objects.all()
     forum = Forum.objects.all()
     return render(request, 'threads_list.html', {'threads': threads})
+
+@login_required
+def forum_list(request):
+    forum = Forum.objects.all()
+    forum_data = list(forum.values())  
+    return JsonResponse(forum_data, safe=False)
 
 @login_required
 def create_thread(request):
@@ -165,3 +174,22 @@ def create_thread(request):
         return JsonResponse(response_data)
         
     return render(request, 'pages/create-thread.html')
+
+@login_required
+def create_forum(request):
+    if request.method == 'POST':
+        title = request.POST.get('forum_title')
+        slug = request.POST.get('forum_description')
+        category_id = request.POST.get('category_id')  
+        
+        if title and category_id: 
+            try:
+                forum, created = Forum.objects.get_or_create(title=title, slug=slug)
+                forum.categories.add(category_id)
+                if created:
+                    return JsonResponse({'forum_id': forum.id, 'forum_title': forum.title})
+                return JsonResponse({'message': 'Forum already exists'})
+            except ValueError as e:
+                return JsonResponse({'message': str(e)})
+    
+    return render(request, 'pages/create-tag.html')
