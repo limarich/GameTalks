@@ -8,6 +8,9 @@ from profiles.models import Profile
 from django.shortcuts import render, redirect
 from django.db.models import Count
 from datetime import datetime
+from django.urls import reverse
+from django.http import HttpResponseRedirect
+import json
 
 def teste(request):
     return HttpResponse("ok")
@@ -90,25 +93,29 @@ def add_comment_to_post(request):
 
 @login_required
 def create_post(request):
+    print('ramonnn')
     if request.method == 'POST':
         title = request.POST.get('title')
         content = request.POST.get('content')
-        tag_titles = request.POST.getlist('tags') 
+        description = request.POST.get('description')
+        tags = json.loads(request.POST.get('tags'))
+        thread_id = request.POST.get('thread_id')
         
         if title and content:
             new_post = Post.objects.create(
                 title=title,
                 content=content,
-                user=request.user  
+                user=request.user ,
+                thread_id= thread_id 
             )
             
-            if tag_titles:
-                for tag_title in tag_titles:
-                    tag, _ = Tag.objects.get_or_create(title=tag_title)
+            if tags:
+                for tag_id in tags:
+                    tag = Tag.objects.get(tag_id=tag_id)
                     new_post.tags.add(tag)
             
             
-            return redirect('discussions:post', post_id=new_post.post_id)  
+            return JsonResponse({'post_id': str(new_post.post_id)})
 
     threads = Thread.objects.all()
     forums = Forum.objects.all()

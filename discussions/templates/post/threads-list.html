@@ -3,13 +3,13 @@
     <span> Thread </span>
     <select id="threadsSelect">
       {% for thread in threads %}
-      <option value="{{ thread.id }}">{{ thread.title }}</option>
+      <option value="{{ thread.thread_id }}">{{ thread.title }}</option>
       {% endfor %}
     </select>
   </div>
   <div class="form-control">
     <br />
-    <button id="openNewThreadModal">+</button>
+    <button id="openNewThreadModal" type="button">+</button>
   </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

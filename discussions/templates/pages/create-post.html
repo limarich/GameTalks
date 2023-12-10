@@ -14,6 +14,7 @@
         </div>
 
         {% include "post/threads-list.html" %}
+        <input type="hidden" id="hiddenSelectedTags" />
       </div>
       <div class="row">
         <div class="form-control">
@@ -22,7 +23,7 @@
         </div>
 
         <div class="select-wrapper">
-          <button id="openTagsModal">Adicionar Tags</button>
+          <button id="openTagsModal" type="button">Adicionar Tags</button>
         </div>
       </div>
       <div class="row">
@@ -32,7 +33,12 @@
         </div>
       </div>
       <div id="selectedTags" class="tags-group"></div>
-      <input type="submit" value="Salvar" class="create-btn" />
+      <input
+        type="submit"
+        value="Salvar"
+        class="create-btn"
+        id="createPostBtn"
+      />
     </form>
     {% include "post/new-thread-modal.html" %}
   </div>
@@ -52,8 +58,36 @@
       $("#openNewTagModal").show();
     });
 
-    $("#postForm").submit(function (e) {
+    $("#createPostBtn").click(function (e) {
       e.preventDefault();
+      var title = $("#postTitle").val();
+      var content = $("#postContent").val();
+      var description = $("#postDescription").val();
+      var tags = $("#hiddenSelectedTags").val();
+      var thread_id = $("#threadsSelect").val();
+
+      console.log("id da thread: ", thread_id);
+
+      $.ajax({
+        url: "new_post",
+        method: "POST",
+        headers: { "X-CSRFToken": getCSRFToken() },
+        data: {
+          title: title,
+          content: content,
+          description: description,
+          thread_id: thread_id,
+          tags: tags,
+        },
+        success: function (response) {
+          if (response) {
+            window.location.href = `/post/${response.post_id}/`;
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error(error);
+        },
+      });
     });
   </script>
   {% endblock %}

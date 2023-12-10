@@ -21,11 +21,11 @@
       // Adiciona as tags recuperadas como checkboxes na lista
       response.tags.forEach(function (tag) {
         var checkbox = $('<input type="checkbox">')
-          .attr("id", "tag_" + tag.id)
+          .attr("id", "tag_" + tag.tag_id)
           .attr("name", "tags")
-          .val(tag.id);
+          .val(tag.tag_id);
         var label = $("<label>")
-          .attr("for", "tag_" + tag.id)
+          .attr("for", "tag_" + tag.tag_id)
           .text(tag.title);
 
         var container = $("<div>").addClass("checkbox-control"); // Novo container div para cada checkbox
@@ -38,7 +38,6 @@
     },
   });
   $("#save-tags-btn").click((e) => {
-    console.log("asdasdd");
     e.preventDefault();
     var selectedTags = [];
     var selectedTagsNames = [];
@@ -58,6 +57,7 @@
         "<span class='tag'>" + "#" + tagName + "</span>"
       );
     });
+    $("#hiddenSelectedTags").val(JSON.stringify(selectedTags));
     $("#tagsModal").hide();
   });
   // Abre o modal de cadastro de nova tag ao clicar em "Nova Tag"
