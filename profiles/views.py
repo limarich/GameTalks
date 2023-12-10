@@ -19,8 +19,9 @@ def profile(request):
         user_posts = Post.objects.filter(user=request.user).prefetch_related('tags')
         user_comments = Comment.objects.filter(user=request.user)
         
-        user_profile.birth_day = user_profile.birth_day.strftime("%d/%m/%Y")
-        user_profile.created_at = user_profile.created_at.strftime("%d/%m/%Y")
+        if(user_profile and user_profile.birth_day): 
+            user_profile.birth_day = user_profile.birth_day.strftime("%d/%m/%Y")
+            user_profile.created_at = user_profile.created_at.strftime("%d/%m/%Y")
         
         for post in user_posts:
             print(f"Post: {post.title}")

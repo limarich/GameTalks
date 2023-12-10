@@ -1,12 +1,17 @@
-{% load i18n %} {% load static %}
+{% load i18n %} {% load static %} {% load socialaccount %}
+<!--  -->
+{% providers_media_js%}
 <!DOCTYPE html>
 <html>
   <head>
     <title>Login</title>
     <link rel="stylesheet" href="{% static '/profiles/css/styles.css' %}" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div class="background-img d-flex-center">
@@ -38,15 +43,15 @@
           {% csrf_token %} {{ login_form.non_field_errors }}
           <div class="fieldWrapper inputs-container">
             <div class="inputs-label">
-                <img src="{% static '/profiles/images/username.svg' %}" alt="">
-                <div>usuário ou email</div>
+              <img src="{% static '/profiles/images/username.svg' %}" alt="" />
+              <div>usuário ou email</div>
             </div>
             {{ login_form.login }}
           </div>
           <div class="fieldWrapper inputs-container">
             <div class="inputs-label">
-                <img src="{% static '/profiles/images/password.svg' %}" alt="">
-                {{ login_form.password.label_tag }}
+              <img src="{% static '/profiles/images/password.svg' %}" alt="" />
+              {{ login_form.password.label_tag }}
             </div>
             {{ login_form.password }}
           </div>
@@ -93,6 +98,9 @@
             <input type="submit" value="{% trans 'Sign Up' %}" />
           </div>
         </form>
+        <a href="{% provider_login_url 'google' %}" class="btn-google"
+          >Login com Google</a
+        >
       </div>
     </div>
   </body>

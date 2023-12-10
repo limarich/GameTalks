@@ -1,4 +1,5 @@
 <div class="statistics-container" id="statistics-container">
+  {% if user_profile %}
   <div class="user-info">
     <div class="flip-card">
       <div class="flip-card-inner">
@@ -20,4 +21,7 @@
     <span>Posts: {{user_posts_count}}</span>
     <span>Comentários: {{user_comments_count}}</span>
   </div>
+  {% else %}
+  <p>O perfil não está disponível.</p>
+  {% endif %}
 </div>
