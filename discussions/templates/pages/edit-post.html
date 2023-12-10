@@ -1,0 +1,97 @@
+{% extends "../base.html" %} {% load static %} {% block content %}
+<head>
+  <title>Editar Post</title>
+  <link rel="stylesheet" href="{% static '/create-post/css/style.css' %}" />
+</head>
+<body>
+  <div class="post-container">
+    <h1>Editar Post</h1>
+    <form id="postForm" class="form">
+      <div class="row">
+        <div class="form-control">
+          <span>Título</span>
+          <input type="text" id="postTitle" value="{{ post.title }}" />
+        </div>
+
+        {% include "post/threads-list.html" %}
+        <input
+          type="hidden"
+          id="hiddenSelectedTags"
+          value="{{ post.tags_ids|safe }}"
+        />
+      </div>
+      <div class="row">
+        <div class="form-control">
+          <span>Descrição</span>
+          <input type="text" id="postDescription" value="{{ post.slug }}" />
+        </div>
+
+        <div class="select-wrapper">
+          <button id="openTagsModal" type="button">Adicionar Tags</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-control">
+          <span>Conteúdo</span>
+          <textarea id="postContent">{{ post.content }}</textarea>
+        </div>
+      </div>
+      <div id="selectedTags" class="tags-group">
+        {% for tag in tags %}
+        <span class="tag">#{{tag.title}}</span>
+        {% endfor %}
+      </div>
+      <input type="submit" value="Salvar" class="create-btn" id="editPostBtn" />
+    </form>
+    {% include "post/new-thread-modal.html" %}
+  </div>
+  {% include "post/tags-list.html" %}
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    // Obtém o token CSRF do cookie
+    function getCSRFToken() {
+      const cookieValue = document.cookie.match(/csrftoken=([^ ;]+)/)[1];
+      return cookieValue;
+    }
+
+    $("#openTagsModal").click(function () {
+      $("#tagsModal").show();
+      $("#tagsList").show();
+      $("#openNewTagModal").show();
+    });
+
+    $("#editPostBtn").click(function (e) {
+      e.preventDefault();
+      var title = $("#postTitle").val();
+      var content = $("#postContent").val();
+      var description = $("#postDescription").val();
+      var tags = $("#hiddenSelectedTags").val();
+      var thread_id = $("#threadsSelect").val();
+
+      console.log("id da thread: ", thread_id);
+
+      $.ajax({
+        url: "",
+        method: "POST",
+        headers: { "X-CSRFToken": getCSRFToken() },
+        data: {
+          title: title,
+          content: content,
+          description: description,
+          thread_id: thread_id,
+          tags: tags,
+        },
+        success: function (response) {
+          if (response) {
+            window.location.href = `/post/${response.post_id}/`;
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error(error);
+        },
+      });
+    });
+  </script>
+  {% endblock %}
+</body>

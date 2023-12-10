@@ -9,6 +9,7 @@ urlpatterns = [
     path('explore', views.explore, name="explore"),
     path('thread/<uuid:thread_id>/', views.thread_detail, name="thread_detail"),
     path('post/<uuid:post_id>/', views.post, name="post"),
+    path('post/edit/<uuid:post_id>/', views.edit_post, name="edit_post"),
     path('post/add_comment/', views.add_comment_to_post, name="add_comment_to_post"),
     path('post/create_post/', views.create_post, name="create_post"),
     path('thread/create_thread', views.create_thread, name="create_thread"),

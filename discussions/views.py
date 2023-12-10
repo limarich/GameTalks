@@ -7,9 +7,6 @@ from categories.models import Forum, Category
 from profiles.models import Profile
 from django.shortcuts import render, redirect
 from django.db.models import Count
-from datetime import datetime
-from django.urls import reverse
-from django.http import HttpResponseRedirect
 import json
 
 def teste(request):
@@ -123,6 +120,45 @@ def create_post(request):
   
   
     return render(request, 'pages/create-post.html', {'threads': threads, 'forums': forums, 'categories': categories})
+
+@login_required
+def edit_post(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        description = request.POST.get('description')
+        tags = request.POST.get('tags')
+        
+        if tags:
+            tags = json.loads(tags)
+        else:
+            tags = [] 
+
+        thread_id = request.POST.get('thread_id')
+        
+        if title and content:
+            # Atualiza os campos do post existente
+            post.title = title
+            post.content = content
+            post.thread_id = thread_id
+            post.save()
+            
+            if tags:
+                for tag_id in tags:
+                    tag = Tag.objects.get(tag_id=tag_id)
+                    post.tags.add(tag)  
+            
+            return JsonResponse({'post_id': str(post.post_id)})
+
+    threads = Thread.objects.all()
+    forums = Forum.objects.all()
+    categories = Category.objects.all()
+    
+    tags = post.tags.all()
+
+    return render(request, 'pages/edit-post.html', {'post': post, 'threads': threads, 'forums': forums, 'categories': categories, 'tags': tags })
 
 @login_required
 def tag_list(request):

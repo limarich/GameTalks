@@ -12,7 +12,11 @@
         {% endfor %}
       </div>
       <div class="post-card--content">
-        <h4>{{ post.content.title }}</h4>
+        <a
+          href="/post/edit/{{post.post_id}}"
+          style="all: unset; cursor: pointer"
+          ><h4>{{ post.title }}</h4></a
+        >
         <p>{{ post.content }}</p>
       </div>
       <a href="/post/{{post.post_id}}/">Clique para Acessar</a>

@@ -1,10 +1,16 @@
 <div class="select-wrapper">
   <div id="threadList" class="form-control">
     <span> Thread </span>
-    <select id="threadsSelect">
+    <select id="threadsSelect" value="{{ post.thread.thread_id }}">
       {% for thread in threads %}
+      <!--  -->
+      {% if thread.thread_id == post.thread.thread_id %}
+      <option value="{{ thread.thread_id }}" selected>
+        {{ thread.title }}
+      </option>
+      {% else %}
       <option value="{{ thread.thread_id }}">{{ thread.title }}</option>
-      {% endfor %}
+      {% endif %} {% endfor %}
     </select>
   </div>
   <div class="form-control">

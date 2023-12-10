@@ -39,7 +39,7 @@
       var csrftoken = getCSRFToken();
 
       $.ajax({
-        url: "new_forum",
+        url: "http://127.0.0.1:8000/post/create_post/new_forum",
         method: "POST",
         data: {
           forum_title: title,
@@ -59,7 +59,7 @@
     });
     function updateForumList() {
       $.ajax({
-        url: "forums",
+        url: "http://127.0.0.1:8000/post/create_post/forums",
         method: "GET",
         success: function (response) {
           $("#forumsSelect").empty();

@@ -56,7 +56,7 @@
     var csrftoken = getCSRFToken();
 
     $.ajax({
-      url: "create_thread",
+      url: "http://127.0.0.1:8000/post/create_post/create_thread",
       method: "POST",
       data: {
         title: threadTitle,
