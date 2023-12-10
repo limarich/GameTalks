@@ -11,8 +11,9 @@
     </div>
 
     <div class="content-wrapper">
-      {% if forums_and_threads %} {% for forum_title, threads_info in
-      forums_and_threads.items %}
+      {% if forums_and_threads %}
+      <!--  -->
+      {% for forum_title, threads_info in forums_and_threads.items %}
       <div class="category-title">{{ forum_title }}</div>
       <ul class="thread-list">
         {% for thread_info in threads_info %}
@@ -31,6 +32,7 @@
       <span>Nenhum fórum encontrado :-/</span>
       {% endif %}
     </div>
+    <a href="/post/create_post/" class="create-post">+</a>
   </section>
 </body>
 {% endblock %}

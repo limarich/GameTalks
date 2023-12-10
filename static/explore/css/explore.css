@@ -75,3 +75,22 @@ section {
   justify-content: space-between;
   align-items: center;
 }
+
+.create-post {
+  all: unset;
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: #34aa1f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 2rem;
+  padding: 1rem;
+  cursor: pointer;
+}
