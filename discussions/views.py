@@ -90,7 +90,6 @@ def add_comment_to_post(request):
 
 @login_required
 def create_post(request):
-    print('ramonnn')
     if request.method == 'POST':
         title = request.POST.get('title')
         content = request.POST.get('content')
@@ -183,7 +182,6 @@ def create_tag(request):
             except Exception as e:
                 return JsonResponse({'message': str(e)})
     
-    return render(request, 'pages/create-tag.html')
 
 @login_required
 def thread_list(request):
@@ -235,4 +233,3 @@ def create_forum(request):
             except ValueError as e:
                 return JsonResponse({'message': str(e)})
     
-    return render(request, 'pages/create-tag.html')

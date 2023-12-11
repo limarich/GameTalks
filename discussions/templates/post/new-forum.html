@@ -61,7 +61,7 @@
     });
     function updateForumList() {
       $.ajax({
-        url: "http://127.0.0.1:8000/post/create_post/forums",
+        url: URL + "/post/create_post/forums",
         method: "GET",
         success: function (response) {
           $("#forumsSelect").empty();
